@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { connect } from "react-redux";
+import { counterActions } from "./actions/counterActions";
 
-function App() {
-  return (
+const App = (props) =>
+{
+
+  const { counter, minusAction, resetAction, addAction,  } = props;
+  
+  return(
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Counter App</h1>
+      <h2>{counter}</h2>
+      <button onClick={ () => minusAction() }>-</button>
+      <button onClick={ () => resetAction() }>reset</button>
+      <button onClick={ () => addAction() }>+</button>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = ({ counter, toDos }) =>
+({
+  counter,
+  toDos,
+});
+
+// const mapDispatchToProps = (dispatch) => ({
+//   add: (action) => dispatch(action),
+// });
+
+export default connect(mapStateToProps, counterActions)(App);
